@@ -21,13 +21,13 @@ jobs:
                   port: ${{ secrets.PORT }}
                   password: ${{ secrets.PASSWORD }}
                   command: 
-                    -   |
-                        cd ${{ secrets.FOLDER }}
-                        sudo docker-compose down 
-                        git pull 
-                        echo "MONGO_HOST=${{ secrets.MONGO_HOST }}" > .env
-                        echo "RMQ_HOST=${{ secrets.RMQ_HOST }}" > .env
-                        echo "RMQ_PORT=${{ secrets.RMQ_PORT }}" > .env
-                        echo "JOURLAY_TOKEN=${{ secrets.JOURLAY_TOKEN }}" > .env
-                        echo "JOURLAY_DM=${{ secrets.JOURLAY_DM }}" > .env
-                        sudo docker-compose up -d
+                    - |
+                        cd ${{ secrets.FOLDER }} /
+                        sudo docker-compose down /
+                        git pull /
+                        echo "MONGO_HOST=${{ secrets.MONGO_HOST }}" > .env /
+                        echo "RMQ_HOST=${{ secrets.RMQ_HOST }}" > .env /
+                        echo "RMQ_PORT=${{ secrets.RMQ_PORT }}" > .env /
+                        echo "JOURLAY_TOKEN=${{ secrets.JOURLAY_TOKEN }}" > .env /
+                        echo "JOURLAY_DM=${{ secrets.JOURLAY_DM }}" > .env /
+                        sudo docker-compose up -d 
