@@ -20,9 +20,11 @@ jobs:
                   username: ${{ secrets.USERNAME }}
                   port: ${{ secrets.PORT }}
                   password: ${{ secrets.PASSWORD }}
+                  script_stop: true
                   script: |
                         cd ${{ secrets.FOLDER }} /
-                        sudo docker-compose down /
+                        echo ${{ secrets.PASSWORD }}
+                        sudo -S docker-compose down /
                         git pull /
                         echo "MONGO_HOST=${{ secrets.MONGO_HOST }}" > .env /
                         echo "RMQ_HOST=${{ secrets.RMQ_HOST }}" > .env /
