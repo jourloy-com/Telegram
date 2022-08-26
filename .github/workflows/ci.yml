@@ -23,7 +23,8 @@ jobs:
                   script_stop: true
                   script: |
                     cd ${{ secrets.FOLDER }}
-                    echo MONGO_HOST=${{ secrets.MONGO_HOST }} > .env
+                    > .env
+                    echo MONGO_HOST=${{ secrets.MONGO_HOST }} >> .env
                     echo RMQ_HOST=${{ secrets.RMQ_HOST }} >> .env
                     echo RMQ_PORT=${{ secrets.RMQ_PORT }} >> .env
                     echo JOURLAY_TOKEN=${{ secrets.JOURLAY_TOKEN }} >> .env
