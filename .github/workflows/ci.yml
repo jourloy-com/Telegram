@@ -4,6 +4,7 @@ on:
     push:
         branches:
             - main
+            - dev
     workflow_dispatch:
 
 jobs:
@@ -22,13 +23,14 @@ jobs:
                   password: ${{ secrets.PASSWORD }}
                   script_stop: true
                   script: |
-                        cd ${{ secrets.FOLDER }} /
+                        cd ${{ secrets.FOLDER }}
                         echo ${{ secrets.PASSWORD }}
-                        sudo -S docker-compose down /
-                        git pull /
-                        echo "MONGO_HOST=${{ secrets.MONGO_HOST }}" > .env /
-                        echo "RMQ_HOST=${{ secrets.RMQ_HOST }}" > .env /
-                        echo "RMQ_PORT=${{ secrets.RMQ_PORT }}" > .env /
-                        echo "JOURLAY_TOKEN=${{ secrets.JOURLAY_TOKEN }}" > .env /
-                        echo "JOURLAY_DM=${{ secrets.JOURLAY_DM }}" > .env /
+                        sudo -S docker-compose down
+                        git pull
+                        echo "MONGO_HOST=${{ secrets.MONGO_HOST }}" > .env
+                        echo "RMQ_HOST=${{ secrets.RMQ_HOST }}" > .env
+                        echo "RMQ_PORT=${{ secrets.RMQ_PORT }}" > .env
+                        echo "JOURLAY_TOKEN=${{ secrets.JOURLAY_TOKEN }}" > .env
+                        echo "JOURLAY_DM=${{ secrets.JOURLAY_DM }}" > .env
+                        echo ${{ secrets.PASSWORD }}
                         sudo docker-compose up -d 
