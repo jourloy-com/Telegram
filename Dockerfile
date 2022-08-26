@@ -4,9 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-# prodution only packages - app errors
-RUN npm install --production
+RUN yarn install
 
-RUN npm build
+RUN yarn build
 
 CMD ["npm", "run", "start:prod"]
