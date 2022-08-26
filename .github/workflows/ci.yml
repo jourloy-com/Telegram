@@ -23,13 +23,13 @@ jobs:
                   password: ${{ secrets.PASSWORD }}
                   script_stop: true
                   script: |
-                        cd ${{ secrets.FOLDER }} \
-                        rm -rf .env \
-                        echo "MONGO_HOST=${{ secrets.MONGO_HOST }}" > .env \
-                        echo "RMQ_HOST=${{ secrets.RMQ_HOST }}" > .env \
-                        echo "RMQ_PORT=${{ secrets.RMQ_PORT }}" > .env \
-                        echo "JOURLAY_TOKEN=${{ secrets.JOURLAY_TOKEN }}" > .env \
-                        echo "JOURLAY_DM=${{ secrets.JOURLAY_DM }}" > .env \
-                        docker-compose down \
-                        git pull \
-                        docker-compose up -d \
+                        cd ${{ secrets.FOLDER }}
+                        rm -rf .env
+                        echo "MONGO_HOST=${{ secrets.MONGO_HOST }}" > .env
+                        echo "RMQ_HOST=${{ secrets.RMQ_HOST }}" > .env
+                        echo "RMQ_PORT=${{ secrets.RMQ_PORT }}" > .env
+                        echo "JOURLAY_TOKEN=${{ secrets.JOURLAY_TOKEN }}" > .env
+                        echo "JOURLAY_DM=${{ secrets.JOURLAY_DM }}" > .env
+                        docker-compose down
+                        git pull
+                        docker-compose up -d
