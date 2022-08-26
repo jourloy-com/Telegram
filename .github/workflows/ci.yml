@@ -1,0 +1,33 @@
+name: Deploy to server
+
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2.4.0
+            - name: Pull and run
+              uses: garygrossgarten/github-action-ssh@v0.6.3
+              with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USERNAME }}
+                  port: ${{ secrets.PORT }}
+                  password: ${{ secrets.PASSWORD }}
+                  command: 
+                    -   |
+                        cd ${{ secrets.FOLDER }}
+                        sudo docker-compose down 
+                        git pull 
+                        echo "MONGO_HOST=${{ secrets.MONGO_HOST }}" > .env
+                        echo "RMQ_HOST=${{ secrets.RMQ_HOST }}" > .env
+                        echo "RMQ_PORT=${{ secrets.RMQ_PORT }}" > .env
+                        echo "JOURLAY_TOKEN=${{ secrets.JOURLAY_TOKEN }}" > .env
+                        echo "JOURLAY_DM=${{ secrets.JOURLAY_DM }}" > .env
+                        sudo docker-compose up -d
