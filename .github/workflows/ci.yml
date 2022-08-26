@@ -21,7 +21,7 @@ jobs:
                   port: ${{ secrets.PORT }}
                   password: ${{ secrets.PASSWORD }}
                   command: 
-                    -   |
+                    - |
                         cd ${{ secrets.FOLDER }}
                         sudo docker-compose down 
                         git pull 
