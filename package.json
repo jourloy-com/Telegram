@@ -1,6 +1,6 @@
 {
   "name": "telegram",
-  "version": "0.1.20",
+  "version": "0.1.22",
   "description": "",
   "author": "",
   "private": true,
@@ -32,6 +32,8 @@
     "amqp-connection-manager": "^4.1.6",
     "amqplib": "^0.10.2",
     "dotenv": "^16.0.1",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.37",
     "mongoose": "^6.5.3",
     "node-telegram-bot-api": "^0.58.0",
     "reflect-metadata": "^0.1.13",
