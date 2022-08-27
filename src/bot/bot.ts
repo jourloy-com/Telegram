@@ -1,5 +1,7 @@
 import * as TelegramBot from "node-telegram-bot-api";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require(`dotenv`).config();
 
 export class Bot {
-	public jourlayBot = new TelegramBot(process.env.JOURLAY_TOKEN, {polling: true});
+	public static jourlayBot = new TelegramBot(process.env.JOURLAY_TOKEN, {polling: true});
 }
