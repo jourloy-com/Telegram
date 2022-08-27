@@ -42,7 +42,7 @@ export class JourlayService {
 		if (h === 15 && m >= 15 && m < 22) {
 			const msg = await this.jourlay.sendMessage(
 				process.env.JOURLAY_DM,
-				`Внимание, через ${22 - m} минут у тебя челлендж!`
+				`Warning, after ${22 - m} minutes you should send challeng's message!`
 			);
 			this.messageForDelete.push({
 				chatID: msg.chat.id,
@@ -63,7 +63,7 @@ export class JourlayService {
 		this.jourlay.on(`message`, async msg => {
 			if (!msg.text) return;
 			if (msg.text === `/start`) {
-				await this.jourlay.sendMessage(msg.chat.id, `Привет 👋`, {
+				await this.jourlay.sendMessage(msg.chat.id, `Hi 👋`, {
 					// eslint-disable-next-line camelcase
 					reply_to_message_id: msg.message_id,
 				});
