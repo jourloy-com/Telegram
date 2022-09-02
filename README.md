@@ -1,5 +1,5 @@
 <h1 align="center">
-  Telegram
+    Telegram
 </h1>
 
 <p align="center">
@@ -18,7 +18,7 @@ $ yarn install
 
 ## ENV
 
-Befor running the app you should create `.env` file. Look into `.env.template` for help
+Before running the app you should create `.env` file. Look into `.env.template` for help
 
 ## Running the app
 

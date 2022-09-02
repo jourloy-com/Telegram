@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {Cron} from "@nestjs/schedule";
-import moment from "moment-timezone";
+import * as moment from "moment-timezone";
 import TelegramBot from "node-telegram-bot-api";
 import {Bot} from "src/bot/bot";
 
@@ -42,7 +42,7 @@ export class JourlayService {
 		if (h === 15 && m >= 15 && m < 22) {
 			const msg = await this.jourlay.sendMessage(
 				process.env.JOURLAY_DM,
-				`Warning, after ${22 - m} minutes you should send challeng's message!`
+				`Warning, after ${22 - m} minutes you should send challenge's message!`
 			);
 			this.messageForDelete.push({
 				chatID: msg.chat.id,
