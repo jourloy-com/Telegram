@@ -31,4 +31,4 @@ jobs:
                     echo JOURLAY_TOKEN=${{ secrets.JOURLAY_TOKEN }} >> .env
                     echo JOURLAY_DM=${{ secrets.JOURLAY_DM }} >> .env
                     git pull
-                    docker-compose up -d --build
+                    docker-compose up -d
