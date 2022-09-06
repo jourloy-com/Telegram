@@ -3,6 +3,7 @@ import {Cron} from "@nestjs/schedule";
 import * as moment from "moment-timezone";
 import TelegramBot from "node-telegram-bot-api";
 import {Bot} from "src/bot/bot";
+import packageJson from 'package.json';
 
 @Injectable()
 export class JourlayService {
@@ -67,9 +68,9 @@ export class JourlayService {
 					// eslint-disable-next-line camelcase
 					reply_to_message_id: msg.message_id,
 				});
-			} else if (msg.text === `/ping`) {
+			} else if (msg.text === `/ping` && msg.chat.id.toString() === process.env.JOURLAY_DM) {
 				const uptime = this.format(process.uptime());
-				await this.jourlay.sendMessage(msg.chat.id, `Uptime: ${uptime}`, {
+				await this.jourlay.sendMessage(msg.chat.id, `Uptime: ${uptime}\nVersion: ${packageJson.version}v`, {
 					// eslint-disable-next-line camelcase
 					reply_to_message_id: msg.message_id,
 				});
