@@ -3,6 +3,7 @@ import {Cron} from "@nestjs/schedule";
 import * as moment from "moment-timezone";
 import TelegramBot from "node-telegram-bot-api";
 import {Bot} from "src/bot/bot";
+import packageJson from 'package.json';
 
 @Injectable()
 export class JourlayService {
@@ -31,7 +32,7 @@ export class JourlayService {
 	}
 
 	/**
-	 * It sends a message to the user at 15:15, and then deletes it at 15:22
+	 * It sends a message to the user at 17:10, and then deletes it at 17:15
 	 */
 	@Cron(`0 */1 * * * *`)
 	private async remind() {
@@ -39,16 +40,16 @@ export class JourlayService {
 		const h = date.hour();
 		const m = date.minute();
 
-		if (h === 15 && m >= 15 && m < 22) {
+		if (h === 17 && m >= 10 && m < 15) {
 			const msg = await this.jourlay.sendMessage(
 				process.env.JOURLAY_DM,
-				`Warning, after ${22 - m} minutes you should send challenge's message!`
+				`Warning, after ${15 - m} minute${15 - m < 2 ? `` : `s`} you should send challenge's message!`
 			);
 			this.messageForDelete.push({
 				chatID: msg.chat.id,
 				msgID: msg.message_id.toString(),
 			});
-		} else if (h === 15 && m === 22) {
+		} else if (h === 17 && m === 15) {
 			for (let i = 0; i < this.messageForDelete.length; i++) {
 				const data = this.messageForDelete.pop();
 				await this.jourlay.deleteMessage(data.chatID, data.msgID);
@@ -67,9 +68,9 @@ export class JourlayService {
 					// eslint-disable-next-line camelcase
 					reply_to_message_id: msg.message_id,
 				});
-			} else if (msg.text === `/ping`) {
+			} else if (msg.text === `/ping` && msg.chat.id.toString() === process.env.JOURLAY_DM) {
 				const uptime = this.format(process.uptime());
-				await this.jourlay.sendMessage(msg.chat.id, `Uptime: ${uptime}`, {
+				await this.jourlay.sendMessage(msg.chat.id, `Uptime: ${uptime}\nVersion: ${packageJson.version}v`, {
 					// eslint-disable-next-line camelcase
 					reply_to_message_id: msg.message_id,
 				});
