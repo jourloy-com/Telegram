@@ -1,9 +1,9 @@
-import {Injectable} from "@nestjs/common";
+import {Injectable, Logger} from "@nestjs/common";
 import {Cron} from "@nestjs/schedule";
 import * as moment from "moment";
 import TelegramBot from "node-telegram-bot-api";
 import {Bot} from "src/bot/bot";
-import packageJson from 'package.json';
+import * as fs from "fs";
 
 @Injectable()
 export class JourlayService {
@@ -12,6 +12,7 @@ export class JourlayService {
 		this.init();
 	}
 
+	private logger = new Logger(JourlayService.name);
 	private jourlay: TelegramBot;
 
 	/**
@@ -38,7 +39,7 @@ export class JourlayService {
 		const date = moment();
 		const h = date.hour();
 		const m = date.minute();
-		
+
 		if (h === 17 && m >= 10 && m < 15) {
 			await this.jourlay.sendMessage(
 				process.env.JOURLAY_DM,
@@ -52,7 +53,9 @@ export class JourlayService {
 	 */
 	private init() {
 		this.jourlay.on(`message`, async msg => {
+			this.logger.debug(`🔨 Get message`);
 			if (!msg.text) return;
+
 			if (msg.text === `/start`) {
 				await this.jourlay.sendMessage(msg.chat.id, `Hi 👋`, {
 					// eslint-disable-next-line camelcase
@@ -60,11 +63,16 @@ export class JourlayService {
 				});
 			} else if (msg.text === `/ping` && msg.chat.id.toString() === process.env.JOURLAY_DM) {
 				const uptime = this.format(process.uptime());
-				await this.jourlay.sendMessage(msg.chat.id, `Uptime: ${uptime}\nVersion: ${packageJson.version}v`, {
+
+				const packageJson = JSON.parse(fs.readFileSync(`package.json`, `utf-8`));
+
+				await this.jourlay.sendMessage(msg.chat.id, `Uptime: ${uptime}\nVersion: ${packageJson.version}`, {
 					// eslint-disable-next-line camelcase
 					reply_to_message_id: msg.message_id,
 				});
 			}
 		});
+
+		this.logger.log(`✅ Events init`);
 	}
 }
