@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {Cron} from "@nestjs/schedule";
-import * as moment from "moment-timezone";
+import * as moment from "moment";
 import TelegramBot from "node-telegram-bot-api";
 import {Bot} from "src/bot/bot";
 import packageJson from 'package.json';
@@ -13,7 +13,6 @@ export class JourlayService {
 	}
 
 	private jourlay: TelegramBot;
-	private messageForDelete: {chatID: number; msgID: string}[] = [];
 
 	/**
 	 * It takes a number of seconds and returns a string in the format `hh:mm:ss`
@@ -36,24 +35,15 @@ export class JourlayService {
 	 */
 	@Cron(`0 */1 * * * *`)
 	private async remind() {
-		const date = moment().tz(`Europe/Moscow`);
+		const date = moment();
 		const h = date.hour();
 		const m = date.minute();
-
+		
 		if (h === 17 && m >= 10 && m < 15) {
-			const msg = await this.jourlay.sendMessage(
+			await this.jourlay.sendMessage(
 				process.env.JOURLAY_DM,
 				`Warning, after ${15 - m} minute${15 - m < 2 ? `` : `s`} you should send challenge's message!`
 			);
-			this.messageForDelete.push({
-				chatID: msg.chat.id,
-				msgID: msg.message_id.toString(),
-			});
-		} else if (h === 17 && m === 15) {
-			for (let i = 0; i < this.messageForDelete.length; i++) {
-				const data = this.messageForDelete.pop();
-				await this.jourlay.deleteMessage(data.chatID, data.msgID);
-			}
 		}
 	}
 
