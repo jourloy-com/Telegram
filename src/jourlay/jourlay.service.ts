@@ -37,7 +37,7 @@ export class JourlayService {
 	@Cron(`0 */1 * * * *`)
 	private async remind() {
 		const date = moment();
-		const h = date.hour();
+		const h = date.hour() - 3;
 		const m = date.minute();
 
 		if (h === 17 && m >= 10 && m < 15) {
