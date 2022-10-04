@@ -13,7 +13,7 @@ async function bootstrap() {
 		transport: Transport.RMQ,
 		options: {
 			urls: [`amqp://${host}:${port}`],
-			queue: `jourlay_telegram`,
+			queue: `jourloy_telegram`,
 			queueOptions: {
 				durable: false,
 			},
