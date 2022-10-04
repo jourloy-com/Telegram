@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
     app:
-        container_name: jourlay_telegram
+        container_name: jourloy_telegram
         build:
             context: .
         volumes:
