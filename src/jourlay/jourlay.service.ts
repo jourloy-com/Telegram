@@ -36,14 +36,16 @@ export class JourlayService {
 	 */
 	@Cron(`0 */1 * * * *`)
 	private async remind() {
-		const date = moment();
-		const h = date.hour() - 3;
-		const m = date.minute();
+		const date = new Date();
+		const h = date.getHours();
+		const m = date.getMinutes();
 
-		if (h === 17 && m >= 10 && m < 15) {
+		const needM = 34;
+
+		if (h === 22 && m >= needM-5 && m < needM) {
 			await this.jourlay.sendMessage(
 				process.env.JOURLAY_DM,
-				`Warning, after ${15 - m} minute${15 - m < 2 ? `` : `s`} you should send challenge's message!`
+				`Warning, after ${needM - m} minute${needM - m < 2 ? `` : `s`} you should send challenge's message!`
 			);
 		}
 	}
